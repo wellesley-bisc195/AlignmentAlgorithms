@@ -1,6 +1,6 @@
 module BISC195Labs
 
-export NWScore
+export nwscore
 
 include("needleman_wunch.jl")
 
