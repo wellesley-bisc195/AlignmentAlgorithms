@@ -1,0 +1,7 @@
+name = "BISC195Lab"
+uuid = "3c894fce-1a5f-4a14-a547-781e8c68175f"
+authors = ["Kevin Bonham", "PhD"]
+version = "0.1.0"
+
+[compat]
+julia = "1.6"
