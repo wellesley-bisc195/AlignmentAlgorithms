@@ -25,4 +25,21 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+    # Test with kwargs
+    for (base) in bases
+        @test nwscore(base, base, gap = -1) == 1
+        @test nwscore(base, nothing, match = 2) == -1
+        @test nwscore(nothing, base, mismatch = -2) == -1
+    end
+
+    # Test double gap
+    @test_throws ArgumentError nwscore(nothing, nothing)
+    @test_throws ArgumentError nwscore(nothing, nothing, match = 2, mismatch = -3)
+    @test_throws ArgumentError nwscore(nothing, nothing, gap = -2)
+
+    # Test nwalign()
+    seq1 = "ATGC"
+    seq2 = "TAGC"
+    @test nwalign(seq1, seq1) == 4
+    @test nwalign(seq1, seq2) == 0
 end
