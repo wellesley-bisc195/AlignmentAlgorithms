@@ -25,4 +25,13 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+    
+        #@test nwscore('A', 'T') == -1
+        #@test nwscore('A', 'T'; mismatch=-2, match = 3) == -2
+        @test nwscore('A', 'T'; mismatch=-2, match = 3, gap=-2) == -2
+        @test nwscore(nothing, 'C'; mismatch=-1, match=1, gap =-2) == -2
+        @test nwscore(nothing, 'C'; mismatch=-1, match=1) == -1
+        @test nwscore('A', nothing; mismatch=-1, match=1) == -1
+    
+
 end
