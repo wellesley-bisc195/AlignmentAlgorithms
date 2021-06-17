@@ -25,4 +25,13 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+    # Test double gap
+        @test_throws ArgumentError nwscore(nothing, nothing)
+
+end
+
+@testset "nwalign" begin
+    seq1="GCATGCU"
+    seq2="GATTACA"
+    @test any(c-> in(c, ["GCATG-CU","G-ATTACA","GCA-TGCU","G-ATTACA", "GCAT-GCU", "G-ATTACA"]), nwalign(seq1,seq2))
 end
