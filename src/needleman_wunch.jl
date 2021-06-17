@@ -6,28 +6,30 @@
 Your documentation here.
 
 This function compares nucleotides for genomic sequences
-    to see if they are matching(1), mismatching(-1), or gaps(-1).
+to see if they are matching=1, mismatching=-1, or gaps=-1.
 
-        Ex.)
-        julia> nwscore('A','G')
-        -1
-        julia> nwscore('A','A')
-        1
-        julia> nwscore('A',nothing)
-        -1
-        julia> nwscore(nothing,nothing)
-            ERROR: ArgumentError: Score for two gaps is not defined
-            Stacktrace:
-                [1] nwscore(#unused#::Nothing, #unused#::Nothing)
-                 @ Main ~/Documents/my_repo/BISC195Labs/src/needleman_wunch.jl:25
-                [2] top-level scope
-                    @ REPL[81]:1
+Ex.)
+```
+julia> nwscore('A','G')
+-1
+julia> nwscore('A','A')
+1
+julia> nwscore('A',nothing)
+-1
+julia> nwscore(nothing,nothing)
+ERROR: ArgumentError: Score for two gaps is not defined
+Stacktrace:
+[1] nwscore(#unused#::Nothing, #unused#::Nothing)
+    @ Main ~/Documents/my_repo/BISC195Labs/src/needleman_wunch.jl:25
+[2] top-level scope
+    @ REPL[81]:1
+```
 
 """
 function nwscore(base1::Char, base2::Char; match = 1, mismatch = -1, gap = -1)
     if base1 == base2
         return match
-    elseif base1 != base2
+    else base1 != base2
         return mismatch
     end
 end

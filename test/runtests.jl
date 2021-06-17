@@ -33,5 +33,11 @@ end
 @testset "nwalign" begin
     seq1="GCATGCU"
     seq2="GATTACA"
-    @test any(c-> in(c, ["GCATG-CU","G-ATTACA","GCA-TGCU","G-ATTACA", "GCAT-GCU", "G-ATTACA"]), nwalign(seq1,seq2))
+    @test any(c-> 
+                in(c, [("GCATG-CU", "G-ATTACA"),
+                       ("GCA-TGCU", "G-ATTACA"), 
+                       ("GCAT-GCU", "G-ATTACA")
+                    ], nwalign(seq1,seq2)
+                    )
+            )
 end

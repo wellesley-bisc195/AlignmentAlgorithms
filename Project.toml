@@ -1,6 +1,6 @@
 name = "BISC195Labs"
 uuid = "3c894fce-1a5f-4a14-a547-781e8c68175f"
-authors = ["Kevin Bonham, PhD", "Ellie Gibbs and Anika Luo"]
+authors = ["Kevin Bonham, PhD", "Ellie Gibbs", "Anika Luo"]
 version = "0.1.0"
 
 [compat]
