@@ -32,6 +32,11 @@ using Test
         @test nwscore(nothing, 'C'; mismatch=-1, match=1, gap =-2) == -2
         @test nwscore(nothing, 'C'; mismatch=-1, match=1) == -1
         @test nwscore('A', nothing; mismatch=-1, match=1) == -1
+        @test nwscore(nothing, 'C'; gap =-2) == -2
     
-
+        @test_throws ArgumentError nwscore(nothing, nothing)
+        @test_throws ArgumentError nwscore(nothing, nothing; gap=-2)
+        @test_throws ArgumentError nwscore(nothing, nothing; mismatch=-1, match=1, gap =-2)
 end
+
+

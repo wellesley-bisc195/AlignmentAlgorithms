@@ -21,3 +21,4 @@ end
 nwscore(::Nothing, base::Char;  match::Int = 1, mismatch::Int = -1, gap::Int = -1) = nwscore(base, nothing; match = match, mismatch = mismatch, gap = gap)
 
 nwscore(::Nothing, ::Nothing) = throw(ArgumentError("Score for two gaps is not defined"))
+nwscore(::Nothing, ::Nothing; match::Int = 1, mismatch::Int = -1, gap::Int = -1) = throw(ArgumentError("Score for two gaps is not defined"))
