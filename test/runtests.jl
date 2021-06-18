@@ -1,3 +1,4 @@
+using Base: String
 using BISC195Labs
 using Combinatorics
 using Test
@@ -31,5 +32,12 @@ using Test
         @test_throws ArgumentError nwscore(nothing, nothing; match = 2, mismatch = -1, gap = -3)
         @test_throws ArgumentError nwscore(nothing, nothing; mismatch = -4, gap = -3)
         @test_throws ArgumentError nwscore(nothing, nothing; match = 1, gap = 0)
+    end
 
+    # Test nwaligner()
+    sampleString = "AGCTGTGA"
+    sampleString2 = "ACTGTGG"
+    @test nwaligner(sampleString, sampleString2) isa Array
+    @test_throws ArgumentError nwaligner(nothing, nothing)
+    @test nwaligner(sampleString, sampleString2) == [['A', 'G', 'C', 'T', 'G', 'T', 'G', 'A'], ['A', '-', 'C', 'T', 'G', 'T', 'G', 'G']] 
 end
