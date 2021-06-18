@@ -47,6 +47,32 @@ nwscore(::Nothing, ::Nothing) = throw(ArgumentError("Score for two gaps is not d
 #println(nwscore('G', 'C'; match = 2, mismatch = -2))
 #println(nwscore('A', 'T'; mismatch=-2, match = 3, gap=-2))
 
-function nwaligner(seq1, seq2)
-    # aligner
+function nwsetupmatrix(seq1, seq2; gapScore = -1)
+    num_c = length(seq1) +1
+    num_r = length(seq2) +1
+    scoringMatrix = zeros(Int, num_r, num_c)
+
+    if num_c > 1
+        for r1ColumnIndex in 2:num_c
+            scoringMatrix[1, r1ColumnIndex] = (r1ColumnIndex - 1) * gapScore
+        end
+    end
+
+    if num_r > 1
+        for c1RowIndex in 2:num_r
+            scoringMatrix[c1RowIndex ,1] = (c1RowIndex - 1) * gapScore
+        end
+    end
+
+    return scoringMatrix
 end
+
+#println(nwsetupmatrix("AATT", "AAGTT", gapScore = -3))
+#println(nwsetupmatrix("GGCTGAG", "AATTACTAAGC"; gapScore = -2))
+#println(nwsetupmatrix("GG", "AAT"))
+###does not work with Floating gapScores
+#println(nwsetupmatrix("GG", "AA"; gapScore = -1.3))
+
+#function nwaligner(seq1, seq2)
+    # aligner
+#end

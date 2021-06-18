@@ -40,4 +40,42 @@ using Test
     @test nwaligner(sampleString, sampleString2) isa Array
     @test_throws ArgumentError nwaligner(nothing, nothing)
     @test nwaligner(sampleString, sampleString2) == [['A', 'G', 'C', 'T', 'G', 'T', 'G', 'A'], ['A', '-', 'C', 'T', 'G', 'T', 'G', 'G']] 
+
+    #lab 4 tests
+    @testset "Scoring matrix setup" begin
+        m = nwsetupmatrix("AATT", "AAGTT")
+        
+        @test m isa Matrix
+        @test size(m, 1) == 5
+        @test size(m, 2) == 6
+        @test all(==(0), m)
+    end
+
+    @testset "Scoring matrix setup" begin
+        m = nwsetupmatrix("AATT", "AAGTT")
+        
+        @test m isa Matrix
+        @test size(m, 1) == 5
+        @test size(m, 2) == 6
+        # @test all(==(0), m) # this no longer works
+    
+        @test m[1,1] == 0
+    
+        # I wrote these next two in a way that's slightly opaque, since writing it in a clear way
+        # would make it obvious how to write the function in the first place.
+        # If you want to know how it works, ask me on Zulip,
+        # or if you want to investigate yourself, break it down into individual expressions
+        @test all(m[2:end,1] .== (-1 .* (1:(size(m,1)-1)))) # test first column
+        @test all(m[1,2:end] .== (-1 .* (1:(size(m,2)-1)))) # test first row
+    
+        m2 = nwsetupmatrix("AATT", "AAGTT"; gap=-2)
+        
+        @test m2 isa Matrix
+        @test size(m2, 1) == 5
+        @test size(m2, 2) == 6
+    
+        @test m2[1,1] == 0
+        @test all(m2[2:end,1] .== (-2 .* (1:(size(m2,1)-1)))) # test first column
+        @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row
+    end
 end
