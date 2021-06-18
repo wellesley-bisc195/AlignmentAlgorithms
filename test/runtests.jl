@@ -25,4 +25,11 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+    # Test error thrown by double gap
+    for (b1, b2) in combinations(bases, 2)
+        @test_throws ArgumentError nwscore(nothing, nothing)
+        @test_throws ArgumentError nwscore(nothing, nothing; match = 2, mismatch = -1, gap = -3)
+        @test_throws ArgumentError nwscore(nothing, nothing; mismatch = -4, gap = -3)
+        @test_throws ArgumentError nwscore(nothing, nothing; match = 1, gap = 0)
+
 end
