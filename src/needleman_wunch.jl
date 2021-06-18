@@ -46,13 +46,38 @@ function nwscore(::Nothing, ::Nothing)
     throw(ArgumentError("Score for two gaps is not defined"))
 end
 
-function nwalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
-    #input sequence 1 (seq1)
-    #input sequence 2 (seq2)
-    #turn each sequence into an array/vector of characters
-    #compare each character based on position (see grid for rules) using nwscore 
-    #make sure there is error if 2 nothings
-    #determine best alignment depending on score
-        #if same score, print both as touple
-    #return alignments (seq1, seq2) as an array
-end 
+# function nwalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
+#     #input sequence 1 (seq1)
+#     #input sequence 2 (seq2)
+#     #turn each sequence into an array/vector of characters
+#     #compare each character based on position (see grid for rules) using nwscore 
+#     #make sure there is error if 2 nothings
+#     #determine best alignment depending on score
+#         #if same score, print both as touple
+#     #return alignments (seq1, seq2) as an array
+# end 
+
+function nwsetupmatrix(s1, s2; gap=-1)
+    setupmatrix = zeros(Int, length(s1)+1, length(s2)+1)
+    for j in 1:length(s2)+1
+        setupmatrix[1, j] = (j-1)*gap
+    end
+    for i in 1:length(s1)+1
+        setupmatrix[i,1] = (i-1)*gap
+    end
+    return setupmatrix
+end
+
+function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
+    scoremat = nwsetupmatrix(seq1, seq2; gap=gap)
+    for i in 2:size(scoremat, 1) # iterate through row indices
+        for j in 2:size(scoremat, 2) # iterate through column indices
+            @info "scoring Row $i, Column $j"
+            above = nwscore(seq1[i-1], nothing) + scoremat[i-1,j]
+            left = nwscore(nothing, seq2[j-1]) + scoremat[i,j-1]
+            diagonal = nwscore(seq1[i-1], seq2[j-1]) + scoremat[i-1,j-1]
+            scoremat[i,j] = max(above, left, diagonal)
+        end
+    end
+    return scoremat
+end
