@@ -5,7 +5,7 @@
 
 Your documentation here.
 """
-function nwscore(base1::Char, base2::Char)
+function nwscore(base1::Char, base2::Char; match, mismatch)
     if isempty(match) && isempty(mismatch)
     if base1 == base2
         return 1
@@ -18,6 +18,7 @@ else
     return mismatch
     end
     return match
+end
 end
 
 nwscore(base::Char, ::Nothing) = -1
