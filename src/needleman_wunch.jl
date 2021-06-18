@@ -36,3 +36,29 @@ nwscore(::Nothing, ::Nothing; match::Int = 1, mismatch::Int = -1, gap::Int = -1)
 function nwalign()
     # aligner
 end
+
+function nwsetupmatrix(seq1::String, seq2::String; gap::Int = -1)
+    length1 = length(seq1)
+    length2 = length(seq2)
+    scoringMatrix = zeros(Int, length1+1, length2+1)
+
+    for i in 1:(length1+1)
+        
+        for j in 1:(length2+1)
+
+            if i == 1
+                if j > 1
+                    scoringMatrix[i,j] = (j-1) * gap
+                end
+            end
+
+            if j == 1
+                if i > 1
+                    scoringMatrix[i,j] = (i-1) * gap
+                end
+            end
+        end
+    end
+
+    #scoringMatrix
+end
