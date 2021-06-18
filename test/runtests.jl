@@ -26,17 +26,29 @@ using Test
     end
 
     
-        #@test nwscore('A', 'T') == -1
-        #@test nwscore('A', 'T'; mismatch=-2, match = 3) == -2
-        @test nwscore('A', 'T'; mismatch=-2, match = 3, gap=-2) == -2
-        @test nwscore(nothing, 'C'; mismatch=-1, match=1, gap =-2) == -2
-        @test nwscore(nothing, 'C'; mismatch=-1, match=1) == -1
-        @test nwscore('A', nothing; mismatch=-1, match=1) == -1
-        @test nwscore(nothing, 'C'; gap =-2) == -2
+    @test nwscore('A', 'T') == -1
+    @test nwscore('A', 'T'; mismatch=-2, match = 3) == -2
+    @test nwscore('A', 'T'; mismatch=-2, match = 3, gap=-2) == -2
+    @test nwscore(nothing, 'C'; mismatch=-1, match=1, gap =-2) == -2
+    @test nwscore(nothing, 'C'; mismatch=-1, match=1) == -1
+    @test nwscore('A', nothing; mismatch=-1, match=1) == -1
+    @test nwscore(nothing, 'C'; gap =-2) == -2
+
+    @test_throws ArgumentError nwscore(nothing, nothing)
+    @test_throws ArgumentError nwscore(nothing, nothing; gap=-2)
+    @test_throws ArgumentError nwscore(nothing, nothing; mismatch=-1, match=1, gap =-2)
+
+
     
-        @test_throws ArgumentError nwscore(nothing, nothing)
-        @test_throws ArgumentError nwscore(nothing, nothing; gap=-2)
-        @test_throws ArgumentError nwscore(nothing, nothing; mismatch=-1, match=1, gap =-2)
 end
+
+@testset "Lab03" begin
+    #not sure if this is what is meant by scoring system
+    @test nwalign("AGGT", "ACGAT", mismatch=-1, match=1, gap=-2) #returns alignment, but is that a string? how do I show both sequences?
+    @test nwalign("AGT", "AGT", mismatch=-1, match=2, gap=-2)
+    @test nwalign("AGGT", "ACGAT")
+
+end
+
 
 
