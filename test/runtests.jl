@@ -44,9 +44,9 @@ end
 
 @testset "Lab03" begin
     #not sure if this is what is meant by scoring system
-    @test nwalign("AGGT", "ACGAT", mismatch=-1, match=1, gap=-2) #returns alignment, but is that a string? how do I show both sequences?
-    @test nwalign("AGT", "AGT", mismatch=-1, match=2, gap=-2)
-    @test nwalign("AGGT", "ACGAT")
+    @test nwalign("AGGT", "ACGAT") == "ACGAT/AGG-T" #returns alignment, but is that a string? best way to show both sequences?
+    @test nwalign("AGT", "AGT"; mismatch=-1, match=2, gap=-2) == "AGT"
+    @test nwalign("AAGATC", "ACGAT"; mismatch=-1, match=2, gap=-2) == "AAGATC/ACGAT-"
 
 end
 
