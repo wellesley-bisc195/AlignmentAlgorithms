@@ -16,7 +16,8 @@ function nwscore(base1::Char, base2::Char; match, mismatch)
     if base1 != base2
         return -1
         end
-    elseif isempty(match)
+    else
+    if isempty(match)
         return mismatch
     end
     return match
