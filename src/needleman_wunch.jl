@@ -5,12 +5,18 @@
 
 Your documentation here.
 """
-function nwscore(base1::Char, base2::Char)
+function nwscore(base1::Char, base2::Char; match=1, mismatch=-1)
         if base1 == base2
             return 1
         end
         if base1 != base2
             return -1
+        end
+        if match == true
+            return match
+        end
+        if mismatch == true 
+            return mismatch
         end
     end
 nwscore(base::Char, ::Nothing) = -1
