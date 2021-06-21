@@ -5,9 +5,9 @@
 
 Your documentation here.
 """
-function nwscore(base1::Char, base2::Char; match, mismatch)
+function nwscore(base1::Char, base2::Char; match= 1, mismatch= -1)
         if base1 == base2 
-            return match
+            return match 
         end
         if base1 != base2 
             return mismatch
