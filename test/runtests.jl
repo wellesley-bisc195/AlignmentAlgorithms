@@ -34,12 +34,13 @@ using Test
         @test_throws ArgumentError nwscore(nothing, nothing; match = 1, gap = 0)
     end
 
-    # Test nwaligner()
-    sampleString = "AGCTGTGA"
-    sampleString2 = "ACTGTGG"
-    @test nwaligner(sampleString, sampleString2) isa Array
-    @test_throws ArgumentError nwaligner(nothing, nothing)
-    @test nwaligner(sampleString, sampleString2) == [['A', 'G', 'C', 'T', 'G', 'T', 'G', 'A'], ['A', '-', 'C', 'T', 'G', 'T', 'G', 'G']] 
+    # Self test nwaligner()
+    #sampleString = "AGCTGTGA"
+    #sampleString2 = "ACTGTGG"
+    #@test nwaligner(sampleString, sampleString2) isa Array{Array{Char, 1}, 1}
+    #@test_throws ArgumentError nwaligner(nothing, nothing)
+    #@test nwaligner(sampleString, sampleString2) == [['A', 'G', 'C', 'T', 'G', 'T', 'G', 'A'], ['A', '-', 'C', 'T', 'G', 'T', 'G', 'G']] 
+end
 
     #lab 4 tests
     @testset "Scoring matrix setup" begin
@@ -78,4 +79,4 @@ using Test
         @test all(m2[2:end,1] .== (-2 .* (1:(size(m2,1)-1)))) # test first column
         @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row
     end
-end
+
