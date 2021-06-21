@@ -6,10 +6,10 @@
 Your documentation here.
 """
 function nwscore(base1::Char, base2::Char; match, mismatch)
-        if base1 == base2 || match == true
+        if base1 == base2 || if match == true
             return 1
         end
-        if base1 != base2 || mismatch == true
+        if base1 != base2 || if mismatch == true
             return -1
         end
     end
