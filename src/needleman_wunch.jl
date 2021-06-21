@@ -12,10 +12,10 @@ function nwscore(base1::Char, base2::Char; match, mismatch)
         if base1 != base2
             return -1
         end
-        if isa match 
+        if match == true
             return match
-        if isa mismatch
-            return match
+        if mismatch == true
+            return mismatch
     end
 nwscore(base::Char, ::Nothing) = -1
 nwscore(::Nothing, base::Char) = nwscore(base, nothing)
