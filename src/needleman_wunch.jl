@@ -70,7 +70,14 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
         for j in 2:size(scoremat, 2) # iterate through column indices
             @info "scoring Row $i, Column $j"
             ##needs to look at the 3 boxes and determine the max score among them, then add that to the prev score
-            scoremat[i,j] = max(nwscore(seq1[i-1], seq2[j-1]; match=match, mismatch=mismatch, gap=gap), nwscore(seq1[i], seq2[j-1]; gap=gap), nwscore(seq1[i-1], seq2[j]; gap=gap))
+            aboveScore = scoremat[i-1, j] + nwscore(seq1[i-1], nothing; gap = gap)
+            leftScore = scoremat[i, j-1] + nwscore(nothing, seq2[j-1]; gap = gap)
+            diagScore = scoremat[i-1, j-1] + nwscore(seq1[i-1], seq2[j-1]; match=match, mismatch=mismatch, gap = gap)
+            println("above: $aboveScore")
+            println("left: $leftScore")
+            println("diag: $diagScore")
+            scoremat[i,j] = max(aboveScore, leftScore, diagScore)
+            #println(max(aboveScore, leftScore, diagScore))
         end
     end
     return scoremat
