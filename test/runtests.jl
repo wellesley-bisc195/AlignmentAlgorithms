@@ -80,3 +80,18 @@ end
         @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row
     end
 
+    @testset "Testing scored matrix" begin
+        scored_m1 = nwscoredmatrix("AGGT", "ACGAT"; gap = -1)
+        scored_m2 = nwscoredmatrix("AAT", "GCTGAC"; gap = -2)
+
+        @test scored_m1 isa Matrix
+        @test size(scored_m1, 1) == 6
+        @test size(scored_m1, 2) == 5
+        @test scored_m1 == [0 -1 -2 -3 -4; -1 1 0 -1 -2; -2 0 0 -1 -2; -3 -1 1 1 0; -4 -2 0 0 0; -5 -3 -1 -1 1]
+       
+        @test scored_m2 isa Matrix
+        @test size(scored_m2, 1) == 7
+        @test size(scored_m2, 2) == 4
+        @test scored_m2 == [0 -2 -4 -6; -2 -1 -3 -5; -4 -3 -2 -4; -6 -5 -4 -1; -8 -7 -6 -3; -10 -7 -6 -5; -12 -9 -8 -7] 
+    end
+

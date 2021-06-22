@@ -66,6 +66,8 @@ function nwsetupmatrix(seq1, seq2; gap = -1)
     return baseMatrix
 end
 
+#nwsetupmatrix("ACTG", "AC"; gap = 2.5)
+
 function nwscoredmatrix(seq1, seq2; match = 1, mismatch = -1, gap = -1)
     # in previously defined functions, seq1 is horizontal, seq2 is vertical
         # oops, did not follow suggestion
@@ -82,14 +84,17 @@ function nwscoredmatrix(seq1, seq2; match = 1, mismatch = -1, gap = -1)
     for rowIndex in 2:numOfRows
         for columnIndex in 2:numOfColumns
             numInCurrentCell = scoredMatrix[rowIndex, columnIndex]
-            scoreAbove = scoredMatrix[rowIndex - 1, columnIndex] - 1
-            scoreLeft = scoredMatrix[rowIndex, columnIndex - 1] - 1
+            scoreAbove = scoredMatrix[rowIndex - 1, columnIndex] + gap
+            scoreLeft = scoredMatrix[rowIndex, columnIndex - 1] + gap
             numDiagonalLeft = scoredMatrix[rowIndex - 1, columnIndex - 1]
-            if seq1[columnIndex - 1] == seq2[rowIndex - 1]
-                scoreDiagonalLeft = numDiagonalLeft + 1
-            else
-                scoreDiagonalLeft = numDiagonalLeft - 1
-            end
+            seq1Base = seq1[columnIndex - 1]
+            seq2Base = seq2[rowIndex - 1]
+            scoreDiagonalLeft = numDiagonalLeft + nwscore(seq1Base, seq2Base; match = match, mismatch = mismatch, gap = gap)
+           # if seq1[columnIndex - 1] == seq2[rowIndex - 1]
+            #    scoreDiagonalLeft = numDiagonalLeft + match
+            #else
+             #   scoreDiagonalLeft = numDiagonalLeft + mismatch 
+            #end
             biggestScore = max(scoreAbove, scoreLeft, scoreDiagonalLeft)
             scoredMatrix[rowIndex, columnIndex] = biggestScore
         end
@@ -99,7 +104,7 @@ end
 
 #testing nwscoredmatrix
 #println(nwscoredmatrix("AGGT", "ACGAT"; gap = -1))
-
+#println(nwscoredmatrix("AAT", "GCTGAC"; gap = -2))
 
 
 
