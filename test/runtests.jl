@@ -58,7 +58,7 @@ end
     @test size(m, 2) == 6
     #@test all(==(0), m) #no longer works
 
-    #=@test m[1,1] == 0
+    @test m[1,1] == 0
 
     # I wrote these next two in a way that's slightly opaque, since writing it in a clear way
     # would make it obvious how to write the function in the first place.
@@ -75,7 +75,7 @@ end
 
     @test m2[1,1] == 0
     @test all(m2[2:end,1] .== (-2 .* (1:(size(m2,1)-1)))) # test first column
-    @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row =#
+    @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row 
 end
 
 

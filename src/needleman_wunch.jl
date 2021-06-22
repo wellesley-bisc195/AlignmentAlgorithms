@@ -60,5 +60,18 @@ function nwsetupmatrix(seq1::String, seq2::String; gap::Int = -1)
         end
     end
 
-    #scoringMatrix
+    return scoringMatrix
+end
+
+
+function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
+    scoremat = nwsetupmatrix(seq1, seq2; gap=gap)
+    for i in 2:size(scoremat, 1) # iterate through row indices
+        for j in 2:size(scoremat, 2) # iterate through column indices
+            @info "scoring Row $i, Column $j"
+            ##needs to look at the 3 boxes and determine the max score among them, then add that to the prev score
+            scoremat[i,j] = max(nwscore(seq1[i-1], seq2[j-1]; match=match, mismatch=mismatch, gap=gap), nwscore(seq1[i], seq2[j-1]; gap=gap), nwscore(seq1[i-1], seq2[j]; gap=gap))
+        end
+    end
+    return scoremat
 end
