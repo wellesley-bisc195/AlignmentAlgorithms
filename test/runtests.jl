@@ -25,4 +25,8 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+    # Test double gap score
+    for (base) in bases
+      @test_throws ArgumentError nwscore(nothing, nothing)
+    end
 end
