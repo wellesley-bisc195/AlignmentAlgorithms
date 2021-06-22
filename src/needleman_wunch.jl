@@ -73,9 +73,9 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
             aboveScore = scoremat[i-1, j] + nwscore(seq1[i-1], nothing; gap = gap)
             leftScore = scoremat[i, j-1] + nwscore(nothing, seq2[j-1]; gap = gap)
             diagScore = scoremat[i-1, j-1] + nwscore(seq1[i-1], seq2[j-1]; match=match, mismatch=mismatch, gap = gap)
-            println("above: $aboveScore")
+            #=println("above: $aboveScore")
             println("left: $leftScore")
-            println("diag: $diagScore")
+            println("diag: $diagScore")=#
             scoremat[i,j] = max(aboveScore, leftScore, diagScore)
             #println(max(aboveScore, leftScore, diagScore))
         end
