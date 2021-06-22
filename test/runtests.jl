@@ -78,6 +78,15 @@ end
     @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row 
 end
 
+@testset "Scoring matrix test" begin
+    m = nwscorematrix("ACGAT", "AGGT")
+    @test m isa Matrix
+    @test size(m, 1) == 6
+    @test size(m, 2) == 5
+
+    testingm = [0  -1  -2  -3  -4; -1   1   0  -1  -2; -2   0   0  -1  -2; -3  -1   1   1   0; -4  -2   0   0   0; -5  -3  -1  -1   1]
+    @test m == testingm
+end
 
 
 
