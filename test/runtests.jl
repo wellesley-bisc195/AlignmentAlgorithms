@@ -39,16 +39,56 @@ using Test
 
 end
 
+# Test nwsetupmatrix
+@testset "Scoring matrix setup" begin
+    m = nwsetupmatrix("AATT", "AAGTT")
+    
+    @test m isa Matrix
+    @test size(m, 1) == 5
+    @test size(m, 2) == 6
+    # @test all(==(0), m) # this no longer works
+
+    @test m[1,1] == 0
+
+    @test all(m[2:end,1] .== (-1 .* (1:(size(m,1)-1)))) # test first column
+    @test all(m[1,2:end] .== (-1 .* (1:(size(m,2)-1)))) # test first row
+
+    m2 = nwsetupmatrix("AATT", "AAGTT"; gap=-2)
+    
+    @test m2 isa Matrix
+    @test size(m2, 1) == 5
+    @test size(m2, 2) == 6
+
+    @test m2[1,1] == 0
+    @test all(m2[2:end,1] .== (-2 .* (1:(size(m2,1)-1)))) # test first column
+    @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row
+end
+
+# Test nwscorematrix
+@testset "nwscorematrix" begin
+    m = nwscorematrix("ACGAT", "AGGT")
+
+    @test m isa Matrix
+    @test size(m, 1) == 6
+    @test size(m, 2) == 5
+
+    @test m ==  [0  -1  -2  -3  -4
+                -1   1   0  -1  -2
+                -2   0   0  -1  -2
+                -3  -1   1   1   0
+                -4  -2   0   0   0
+                -5  -3  -1  -1   1]
+end
+
 # Test nwalign
 @testset "nwalign" begin
-    seq1 = "ACGAT"
-    seq2 = "AGGT"
-    bestAlignment = Set{String}([("ACGAT", "A-GGT"), ("ACGAT", "AGG-T")])
+    s1 = "ACGAT"
+    s2 = "AGGT"
+    bestAlignment = Set([("ACGAT", "A-GGT"), ("ACGAT", "AGG-T")])
 
-    @test nwalign(seq1, seq2) == bestAlignment, 1
-    @test nwalign(seq1, seq2; match = 2) == bestAlignment, 4
-    @test nwalign(seq1, seq2; gap = -2) == bestAlignment, 0
-    @test nwalign(seq1, seq2; match = 2, mismatch = -2) == bestAlignment, 3
-    @test nwalign(seq1, seq2; match = 2, mismatch = -2, gap = -2) == bestAlignment, 2
-
+    @test nwalign(s1, s2) == (bestAlignment, 1)
+    @test nwalign(s1, s2; match = 2) == (bestAlignment, 4)
+    @test nwalign(s1, s2; gap = -2) == (bestAlignment, 0)
+    @test nwalign(s1, s2; match = 2, mismatch = -2) == (bestAlignment, 3)
+    @test nwalign(s1, s2; match = 2, mismatch = -2, gap = -2) == (bestAlignment, 2)
 end

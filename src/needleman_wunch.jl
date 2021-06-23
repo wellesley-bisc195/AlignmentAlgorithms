@@ -38,6 +38,27 @@ nwscore(::Nothing, base::Char; match = 1, mismatch = -1, gap = -1) = nwscore(bas
 
 nwscore(::Nothing, ::Nothing; match = 1, mismatch = -1, gap = -1) = throw(ArgumentError("Score for two gaps is not defined"))
 
-function nwalign()
-    # aligner
+function nwsetupmatrix(seq1::String, seq2::String; gap = -1)
+    m = zeros(Int, length(seq1) + 1, length(seq2) + 1)
+    numrows, numcols = size(m,1), size(m,2)
+    for i in 2:max(numrows, numcols)
+        i <= numrows && (m[i,1] = (i - 1) * gap)
+        i <= numcols && (m[1,i] = (i - 1) * gap)
+    end
+    return m
+end
+
+function nwscorematrix(seq1::String, seq2::String; match=1, mismatch=-1, gap=-1)
+    scoremat = nwsetupmatrix(seq1, seq2; gap=gap)
+    for i in 2:size(scoremat, 1) # iterate through row indices
+        for j in 2:size(scoremat, 2) # iterate through column indices
+            #@info "scoring Row $i, Column $j"
+            scoremat[i,j] = max(scoremat[i-1, j] + gap, scoremat[i, j-1] + gap, scoremat[i-1, j-1] + nwscore(seq1[i-1], seq2[j-1]; match = match, mismatch = mismatch))
+        end
+    end
+    return scoremat
+end
+
+function nwalign(seq1::String, seq2::String; match=1, mismatch=-1, gap=-1)
+    # complete it!
 end
