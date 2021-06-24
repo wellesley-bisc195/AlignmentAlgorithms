@@ -2,6 +2,6 @@ module BISC195Labs
 
 export nwscore
 
-include("needleman_wunch.jl")
+include("scoring.jl")
 
 end

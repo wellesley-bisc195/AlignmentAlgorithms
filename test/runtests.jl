@@ -1,4 +1,4 @@
-using BISC195Labs
+using NeedlemanWunsch
 using Combinatorics
 using Test
 
