@@ -1,9 +1,9 @@
-module BISC195Labs
+module NeedlmanWunsch
 
-export nwscore
+export nwscore,
+       nwsetupmatrix,
+       nwscorematrix
 #export nwalign
-export nwsetupmatrix
-export nwscorematrix
 
 include("scoring.jl")
 
