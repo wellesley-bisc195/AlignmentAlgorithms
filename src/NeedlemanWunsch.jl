@@ -1,4 +1,4 @@
-module NeedlmanWunsch
+module NeedlemanWunsch
 
 export nwscore,
        nwsetupmatrix,
