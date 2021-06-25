@@ -1,4 +1,4 @@
-using NeedlemanWunsch
+using AlignmentAlgorithms
 using Combinatorics
 using Test
 
