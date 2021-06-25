@@ -1,10 +1,10 @@
-module NeedlemanWunsch
+module AlignmentAlgorithms
 
 export nwscore,
        nwsetupmatrix,
        nwscorematrix
 #export nwalign
 
-include("scoring.jl")
+include("needleman_wunsch.jl")
 
 end

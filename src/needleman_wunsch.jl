@@ -72,10 +72,9 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
     scoremat = nwsetupmatrix(seq1, seq2; gap=gap)
     for i in 2:size(scoremat, 1) # iterate through row indices
         for j in 2:size(scoremat, 2) # iterate through column indices
-            @info "scoring Row $i, Column $j"
-            above = nwscore(seq1[i-1], nothing) + scoremat[i-1,j]
-            left = nwscore(nothing, seq2[j-1]) + scoremat[i,j-1]
-            diagonal = nwscore(seq1[i-1], seq2[j-1]) + scoremat[i-1,j-1]
+            above = nwscore(seq1[i-1], nothing; match, mismatch, gap) + scoremat[i-1,j]
+            left = nwscore(nothing, seq2[j-1]; match, mismatch, gap) + scoremat[i,j-1]
+            diagonal = nwscore(seq1[i-1], seq2[j-1]; match, mismatch, gap) + scoremat[i-1,j-1]
             scoremat[i,j] = max(above, left, diagonal)
         end
     end
