@@ -25,6 +25,32 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+<<<<<<< HEAD
+    
+    @test nwscore('A', 'T') == -1
+    @test nwscore('A', 'T'; mismatch=-2, match = 3) == -2
+    @test nwscore('A', 'T'; mismatch=-2, match = 3, gap=-2) == -2
+    @test nwscore(nothing, 'C'; mismatch=-1, match=1, gap =-2) == -2
+    @test nwscore(nothing, 'C'; mismatch=-1, match=1) == -1
+    @test nwscore('A', nothing; mismatch=-1, match=1) == -1
+    @test nwscore(nothing, 'C'; gap =-2) == -2
+
+    @test_throws ArgumentError nwscore(nothing, nothing)
+    @test_throws ArgumentError nwscore(nothing, nothing; gap=-2)
+    @test_throws ArgumentError nwscore(nothing, nothing; mismatch=-1, match=1, gap =-2)
+
+
+    
+end
+
+#@testset "Lab03 Step9" begin
+    #not sure if this is what is meant by scoring system
+    #@test nwalign("AGGT", "ACGAT") == "ACGAT/AGG-T" #returns alignment, but is that a string? best way to show both sequences?
+    #@test nwalign("AGT", "AGT"; mismatch=-1, match=2, gap=-2) == "AGT"
+   # @test nwalign("AAGATC", "ACGAT"; mismatch=-1, match=2, gap=-2) == "AAGATC/ACGAT-"
+
+#end
+=======
     # Test double gap
         @test_throws ArgumentError nwscore(nothing, nothing)
 
@@ -41,6 +67,7 @@ end
 #                     )
 #             )
 # end
+>>>>>>> main
 
 @testset "Scoring matrix setup" begin
     m = nwsetupmatrix("AATT", "AAGTT")
@@ -48,7 +75,11 @@ end
     @test m isa Matrix
     @test size(m, 1) == 5
     @test size(m, 2) == 6
+<<<<<<< HEAD
+    #@test all(==(0), m) #no longer works
+=======
     # @test all(==(0), m) # this no longer works
+>>>>>>> main
 
     @test m[1,1] == 0
 
@@ -67,6 +98,24 @@ end
 
     @test m2[1,1] == 0
     @test all(m2[2:end,1] .== (-2 .* (1:(size(m2,1)-1)))) # test first column
+<<<<<<< HEAD
+    @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row 
+end
+
+@testset "Scoring matrix test" begin
+    m = nwscorematrix("ACGAT", "AGGT")
+    @test m isa Matrix
+    @test size(m, 1) == 6
+    @test size(m, 2) == 5
+
+    testingm = [0  -1  -2  -3  -4; -1   1   0  -1  -2; -2   0   0  -1  -2; -3  -1   1   1   0; -4  -2   0   0   0; -5  -3  -1  -1   1]
+    @test m == testingm
+end
+
+
+
+
+=======
     @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row
 end
 
@@ -82,4 +131,25 @@ end
     @test all(m[1,2:end] .== (-1 .* (1:(size(m,2)-1)))) # test first row
     
     @test m == [  0  -1  -2  -3  -4; -1   1   0  -1  -2; -2   0   0  -1  -2; -3  -1   1   1   0; -4  -2   0   0   0; -5  -3  -1  -1   1]
+end
+>>>>>>> main
+
+@testset "Lab06" begin
+    scoremat = swscorematrix("AAACCCGGG","TTTCCCAAA")
+    @test maximum(swscorematrix("AAACCCGGG","TTTCCCAAA")) == 3
+    @test maximum(swscorematrix("AAACCCGGG","TTTCCCAAA"; match=2)) == 6
+    @test maximum(swscorematrix("AAACCCGGG","TTTCCCAAA"; gap=-2)) == 3
+    @test maximum(swscorematrix("AAACCCGGG","TTTCCCAAA"; mismatch=-2)) == 3
+
+    @test swscorematrix("GGTTGACTA", "TGTTACGG"; match=3, mismatch=-3, gap=-2) ==
+        [0  0  0  0  0   0   0   0  0
+         0  0  3  1  0   0   0   3  3
+         0  0  3  1  0   0   0   3  6
+         0  3  1  6  4   2   0   1  4
+         0  3  1  4  9   7   5   3  2
+         0  1  6  4  7   6   4   8  6
+         0  0  4  3  5  10   8   6  5
+         0  0  2  1  3   8  13  11  9
+         0  3  1  5  4   6  11  10  8
+         0  1  0  3  2   7   9   8  7]
 end
