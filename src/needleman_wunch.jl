@@ -34,3 +34,4 @@ function nwalign(seq1::String, seq2::String)
         println(seq1, " ", seq2) 
     end 
 end
+
