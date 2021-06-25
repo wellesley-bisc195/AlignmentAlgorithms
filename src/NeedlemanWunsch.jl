@@ -5,6 +5,6 @@ export nwscore
 export nwsetupmatrix
 export nwscorematrix
 
-include("needleman_wunch.jl")
+include("scoring.jl")
 
 end
