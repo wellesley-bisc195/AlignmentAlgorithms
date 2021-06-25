@@ -1,4 +1,4 @@
-using BISC195Labs
+using AlignmentAlgorithms
 using Combinatorics
 using Test
 
@@ -25,6 +25,7 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+<<<<<<< HEAD
     
     @test nwscore('A', 'T') == -1
     @test nwscore('A', 'T'; mismatch=-2, match = 3) == -2
@@ -49,6 +50,24 @@ end
    # @test nwalign("AAGATC", "ACGAT"; mismatch=-1, match=2, gap=-2) == "AAGATC/ACGAT-"
 
 #end
+=======
+    # Test double gap
+        @test_throws ArgumentError nwscore(nothing, nothing)
+
+end
+
+# @testset "nwalign" begin
+#     seq1="GCATGCU"
+#     seq2="GATTACA"
+#     @test any(c-> 
+#                 in(c, [("GCATG-CU", "G-ATTACA"),
+#                        ("GCA-TGCU", "G-ATTACA"), 
+#                        ("GCAT-GCU", "G-ATTACA")
+#                     ], nwalign(seq1,seq2)
+#                     )
+#             )
+# end
+>>>>>>> main
 
 @testset "Scoring matrix setup" begin
     m = nwsetupmatrix("AATT", "AAGTT")
@@ -56,7 +75,11 @@ end
     @test m isa Matrix
     @test size(m, 1) == 5
     @test size(m, 2) == 6
+<<<<<<< HEAD
     #@test all(==(0), m) #no longer works
+=======
+    # @test all(==(0), m) # this no longer works
+>>>>>>> main
 
     @test m[1,1] == 0
 
@@ -75,6 +98,7 @@ end
 
     @test m2[1,1] == 0
     @test all(m2[2:end,1] .== (-2 .* (1:(size(m2,1)-1)))) # test first column
+<<<<<<< HEAD
     @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row 
 end
 
@@ -91,3 +115,21 @@ end
 
 
 
+=======
+    @test all(m2[1,2:end] .== (-2 .* (1:(size(m2,2)-1)))) # test first row
+end
+
+@testset "Last matrix test" begin
+    m=nwscorematrix("ACGAT","AGGT")
+
+    @test m isa Matrix
+    @test size(m, 1) == 6
+    @test size(m, 2) == 5
+    
+    @test m[1,1] == 0
+    @test all(m[2:end,1] .== (-1 .* (1:(size(m,1)-1)))) # test first column
+    @test all(m[1,2:end] .== (-1 .* (1:(size(m,2)-1)))) # test first row
+    
+    @test m == [  0  -1  -2  -3  -4; -1   1   0  -1  -2; -2   0   0  -1  -2; -3  -1   1   1   0; -4  -2   0   0   0; -5  -3  -1  -1   1]
+end
+>>>>>>> main

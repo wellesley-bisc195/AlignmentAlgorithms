@@ -1,6 +1,10 @@
-name = "BISC195Labs"
+name = "AlignmentAlgorithms"
 uuid = "3c894fce-1a5f-4a14-a547-781e8c68175f"
+<<<<<<< HEAD
 authors = ["Kevin Bonham, PhD", "Jen Enriquez", "Emily Lu"]
+=======
+authors = ["Kevin Bonham, PhD", "Ellie Gibbs", "Anika Luo"]
+>>>>>>> main
 version = "0.1.0"
 
 [compat]
