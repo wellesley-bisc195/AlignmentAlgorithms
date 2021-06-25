@@ -25,4 +25,15 @@ using Test
         @test nwscore(nothing, base; gap = -2) == -2
     end
 
+    #Test Double gap score
+    for (base) in bases
+        @test_throws ArgumentError nwscore(nothing, nothing)
+    end
+
+    #NWalign test
+    for (base) in bases
+        @test nwalign(base1, base2) == "base1, base2"
+        @test nwalign(base2, base1) == "base2, base1"
+        @test nwalign(base1, nothing) == "base1, nothing"
+        @test nwalign(nothing, base1) == "nothing, base1"
 end
