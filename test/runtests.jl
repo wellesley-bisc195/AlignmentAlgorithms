@@ -29,11 +29,13 @@ using Test
     for (base) in bases
         @test_throws ArgumentError nwscore(nothing, nothing)
     end
+end
+
+@testset "nwalign" begin
+    seq1 = "AAGT"
+    seq2 = "GCAT"
 
     #NWalign test
-    for (base) in bases
-        @test nwalign(base1, base2) == "base1, base2"
-        @test nwalign(base2, base1) == "base2, base1"
-        @test nwalign(base1, nothing) == "base1, nothing"
-        @test nwalign(nothing, base1) == "nothing, base1"
+    @test nwalign(seq1, seq2) isa Tuple #For one best alignment
+    @test nwalign(seq1, seq2) isa Vector{Tuple{String, String}} #For multiple alignments
 end

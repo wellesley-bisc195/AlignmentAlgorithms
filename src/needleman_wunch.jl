@@ -29,8 +29,6 @@ end
 nwscore(base::Char, ::Nothing; gap=-1, match= 1, mismatch= -1)= gap
 nwscore(::Nothing, base::Char; gap=-1, match=1, mismatch= -1) = nwscore(base, nothing; gap=gap, match=match, mismatch=mismatch)
 nwscore(::Nothing, ::Nothing) = throw(ArgumentError("Score for two gaps is not defined"))
-function nwalign(seq1::String, seq2::String)
-    for (seq1, seq2) in t
-        println(seq1, " ", seq2) 
-    end 
+
+function nwalign(seq1::String, seq2::String; match= 1, mismatch = -1, gap=-1)
 end
