@@ -1,10 +1,6 @@
 name = "AlignmentAlgorithms"
 uuid = "3c894fce-1a5f-4a14-a547-781e8c68175f"
-<<<<<<< HEAD
-authors = ["Emily Lu (me), Jen Enriquez (my partner)"]
-=======
 authors = ["Kevin Bonham, PhD", "Ellie Gibbs", "Anika Luo", "Andrea Chua"]
->>>>>>> b492d81d9cfd6b36d59661794adf41b9fa678d6d
 version = "0.1.0"
 
 [compat]
