@@ -80,3 +80,73 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
     end
     return scoremat
 end
+
+#need to write a function that finds and returns the best alignment
+function nwalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
+    scoremat = nwscorematrix(seq1, seq2; match=match, mismatch=mismatch, gap=gap)
+    aligned1 = ""
+    aligned2 = ""
+    
+    #make these while loops instead, update indices only within the conditional statements
+    #while i > 1 and while j>1
+
+    i = size(scoremat,1)
+    j = size(scoremat,2)
+
+    while i > 1 && j > 1
+    #=    for i in size(scoremat,1):-1:2 # iterate through row indices backwards
+        for j in size(scoremat,2):-1:2 # iterate through column indices backwards =#
+            above = scoremat[i-1,j]
+            left = scoremat[i,j-1]
+            diagonal = scoremat[i-1,j-1]
+
+            #check scores from left, right, diag, and if any match current cell, then add that char to the alignments
+            if scoremat[i,j] == nwscore(seq1[i-1], nothing; match, mismatch, gap) + scoremat[i-1,j]
+                @info "max is from above"
+                aligned1 = aligned1 * seq1[i-1]
+                aligned2 = aligned2 * "-"
+                #update the traversal indices
+                i = i-1
+            elseif scoremat[i,j] == nwscore(nothing, seq2[j-1]; match, mismatch, gap) + scoremat[i,j-1]
+                @info "max is from left"
+                aligned1 = aligned1 * "-"
+                aligned2 = aligned2 * seq2[j-1]
+                #update the traversal indices
+                j = j-1
+            else
+                @info "max is from diag"
+                aligned1 = aligned1 * seq1[i-1]
+                aligned2 = aligned2 * seq2[j-1]
+                #update the traversal indices
+                i = i-1
+                j = j-1
+            end
+
+            #= #issue: adds letters to the alignments for each cell in the matrix, when it should be just
+            @info "max is " max(above, left, diagonal)
+            if max(above, left, diagonal) == above
+                @info "max is from above"
+                aligned1 = aligned1 * seq1[i-1]
+                aligned2 = aligned2 * "-"
+                #update the traversal indices
+                i = i-1
+            elseif max(above, left, diagonal) == left
+                @info "max is from left"
+                aligned1 = aligned1 * "-"
+                aligned2 = aligned2 * seq2[j-1]
+                #update the traversal indices
+                j = j-1
+            else
+                @info "max is from diag"
+                aligned1 = aligned1 * seq1[i-1]
+                aligned2 = aligned2 * seq2[j-1]
+                #update the traversal indices
+                i = i-1
+                j = j-1
+            end =#
+        #end
+    end
+    aligned1 = reverse(aligned1)
+    aligned2 = reverse(aligned2)
+    return t = (aligned1, aligned2)
+end
