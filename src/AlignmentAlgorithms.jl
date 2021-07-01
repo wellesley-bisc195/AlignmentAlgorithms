@@ -2,7 +2,7 @@ module AlignmentAlgorithms
 
 export nwscore,
        nwsetupmatrix,
-       nwscorematrix,
+       nwscorematrix
 #export nwalign
 
 include("needleman_wunsch.jl")
