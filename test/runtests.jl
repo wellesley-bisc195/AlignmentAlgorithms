@@ -103,3 +103,16 @@ end
          0  3  1  5  4   6  11  10  8
          0  1  0  3  2   7   9   8  7]
 end
+
+@testset "Lab07" begin
+    @test nwalign("AATTGGCC", "AATTTGCC") == ("AATTGGCC", "AATTTGCC")
+    @test any(aln -> aln == nwalign("AATTGGCC", "AAGGTTCC"), [
+            ("AA--TTGGCC", "AAGGTT--CC"),
+            ("AATTGGCC", "AAGGTTCC")])
+    @test nwalign("AATTGGCC", "AAGGTTCC", gap=-2) == ("AATTGGCC", "AAGGTTCC")
+    @test nwalign("AATTGGCC", "AAGGTTCC", mismatch=-2) == ("AA--TTGGCC", "AAGGTT--CC")
+
+    @test swalign("AAT", "AA") == ("AA", "AA")
+    @test swalign("AAAAATTGGCCAAAAA", "ATTGGCCA") == ("ATTGGCCA", "ATTGGCCA")
+    @test swalign("AAAAATTGGCCAAAAA", "ATTGGCAAA") == ("ATTGGCCAAA", "ATTGGC-AAA")
+end
