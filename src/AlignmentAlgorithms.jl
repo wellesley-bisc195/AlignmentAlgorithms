@@ -3,8 +3,11 @@ module AlignmentAlgorithms
 export nwscore,
        nwsetupmatrix,
        nwscorematrix,
+       nwalign,
+       swscore,
        swsetupmatrix,
-       swscorematrix
+       swscorematrix,
+       swalign
 #export nwalign
 
 include("needleman_wunsch.jl")
