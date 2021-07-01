@@ -80,3 +80,4 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
     end
     return scoremat
 end
+
