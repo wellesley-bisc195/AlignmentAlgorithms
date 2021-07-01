@@ -39,7 +39,7 @@ function nwscore(base::Char, ::Nothing; match = 1, mismatch = -1, gap = -1)
 end
 
 function nwscore(::Nothing, base::Char; match = 1, mismatch = -1, gap = -1)
-    nwscore(base, nothing; gap)
+    nwscore(base, nothing; gap = gap)
 end
 
 function nwscore(::Nothing, ::Nothing)
@@ -69,12 +69,12 @@ function nwsetupmatrix(s1, s2; gap=-1)
 end
 
 function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
-    scoremat = nwsetupmatrix(seq1, seq2; gap=gap)
+    scoremat = nwsetupmatrix(seq1, seq2;  gap=gap)
     for i in 2:size(scoremat, 1) # iterate through row indices
         for j in 2:size(scoremat, 2) # iterate through column indices
-            above = nwscore(seq1[i-1], nothing; match, mismatch, gap) + scoremat[i-1,j]
-            left = nwscore(nothing, seq2[j-1]; match, mismatch, gap) + scoremat[i,j-1]
-            diagonal = nwscore(seq1[i-1], seq2[j-1]; match, mismatch, gap) + scoremat[i-1,j-1]
+            above = nwscore(seq1[i-1], nothing; match=match, mismatch=mismatch, gap=gap) + scoremat[i-1,j]
+            left = nwscore(nothing, seq2[j-1]; match=match, mismatch=mismatch, gap=gap) + scoremat[i,j-1]
+            diagonal = nwscore(seq1[i-1], seq2[j-1]; match=match, mismatch=mismatch, gap=gap) + scoremat[i-1,j-1]
             scoremat[i,j] = max(above, left, diagonal)
         end
     end
