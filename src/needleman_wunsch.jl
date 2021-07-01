@@ -39,7 +39,7 @@ function nwscore(base::Char, ::Nothing; match = 1, mismatch = -1, gap = -1)
 end
 
 function nwscore(::Nothing, base::Char; match = 1, mismatch = -1, gap = -1)
-    nwscore(base, nothing; gap)
+    nwscore(base, nothing; gap=gap)
 end
 
 function nwscore(::Nothing, ::Nothing)
