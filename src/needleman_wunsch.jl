@@ -80,3 +80,13 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
     end
     return scoremat
 end
+
+function nwalignment(seq1, seq2, scoremat)
+    for i in i:size(scoremat,1)
+        for j in j:size(scoremat, 2)
+            if diagonal
+                alignment = match || DimensionMismatch
+            elseif above || left
+                alignment= gap
+            end
+end
