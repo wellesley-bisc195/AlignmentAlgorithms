@@ -35,6 +35,10 @@ end
     ("GTT-AC", "GTTGAC")
 """
 function swalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
+    if !isDNA(seq1) || !isDNA(seq2) || length(seq1) == 0 || length(seq2) == 0
+        throw(ErrorException("Invalid DNA sequence provided"))
+    end
+    
     scoremat = swscorematrix(seq1, seq2; match=match, mismatch=mismatch, gap=gap)
     aligned1 = ""
     aligned2 = ""
@@ -43,27 +47,27 @@ function swalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
 
     i = maxScore[2][1]
     j = maxScore[2][2]
-    @info i
-    @info j
+    #@info i
+    #@info j
 
     while i > 1 && j > 1
             if scoremat[i,j] == 0
                 break
             #check scores from left, right, diag, and if any match current cell, then add that char to the alignments
             elseif scoremat[i,j] == nwscore(seq1[i-1], nothing; match, mismatch, gap) + scoremat[i-1,j]
-                @info "max is from above"
+                #@info "max is from above"
                 aligned1 = aligned1 * seq1[i-1]
                 aligned2 = aligned2 * "-"
                 #update the traversal indices
                 i = i-1
             elseif scoremat[i,j] == nwscore(nothing, seq2[j-1]; match, mismatch, gap) + scoremat[i,j-1]
-                @info "max is from left"
+                #@info "max is from left"
                 aligned1 = aligned1 * "-"
                 aligned2 = aligned2 * seq2[j-1]
                 #update the traversal indices
                 j = j-1
             else
-                @info "max is from diag"
+                #@info "max is from diag"
                 aligned1 = aligned1 * seq1[i-1]
                 aligned2 = aligned2 * seq2[j-1]
                 #update the traversal indices

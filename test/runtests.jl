@@ -112,7 +112,15 @@ end
     @test nwalign("AATTGGCC", "AAGGTTCC", gap=-2) == ("AATTGGCC", "AAGGTTCC")
     @test nwalign("AATTGGCC", "AAGGTTCC", mismatch=-2) == ("AA--TTGGCC", "AAGGTT--CC")
 
+    @test nwalign("AGGT", "ACGAT") == ("AGG-T", "ACGAT")
+
     @test swalign("AAT", "AA") == ("AA", "AA")
     @test swalign("AAAAATTGGCCAAAAA", "ATTGGCCA") == ("ATTGGCCA", "ATTGGCCA")
     @test swalign("AAAAATTGGCCAAAAA", "ATTGGCAAA") == ("ATTGGCCAAA", "ATTGGC-AAA")
+
+    @test swalign("AAACCCGGG","TTTCCCAAA") == ("CCC", "CCC")
+    @test swalign("TGTTACGG", "GGTTGACTA") == ("GTT-AC", "GTTGAC")
+
+    @test_throws ErrorException nwalign("123","ACG")
+    @test_throws ErrorException nwalign("","")
 end
