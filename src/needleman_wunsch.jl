@@ -89,4 +89,6 @@ function nwalignment(seq1, seq2, scoremat)
             elseif above || left
                 alignment= gap
             end
+        end
+    end
 end
