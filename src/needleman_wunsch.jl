@@ -81,14 +81,25 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
     return scoremat
 end
 
-function nwalignment(seq1, seq2, scoremat)
-    for i in i:size(scoremat,1)
+#=function tracealign(scoremat)
+    i= size(scoremat, 1)
+    j= size(scoremat, 2)
+    for i in i:scoremat[1,j]
         for j in j:size(scoremat, 2)
-            if diagonal
-                alignment = match || DimensionMismatch
-            elseif above || left
-                alignment= gap
+            
+            if [i,j]== [i, j-1]
+                push!(gap, seq1)
+                push!(j, seq2)
+            elseif [i,j] == [i-1, j] 
+                push!(gap, seq2)
+                push!(i, seq1)
+            elseif [i,j] == [i-1, j-1]
+                push!(i, seq1)
+                push!(j, seq2)
             end
         end
     end
-end
+end=#
+
+i= size(scoremat, 1)
+j= size(scoremat, 2)
