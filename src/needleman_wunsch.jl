@@ -39,7 +39,7 @@ function nwscore(base::Char, ::Nothing; match = 1, mismatch = -1, gap = -1)
 end
 
 function nwscore(::Nothing, base::Char; match = 1, mismatch = -1, gap = -1)
-    nwscore(base, nothing; gap)
+    nwscore(base, nothing; gap=gap)
 end
 
 function nwscore(::Nothing, ::Nothing)
@@ -79,4 +79,80 @@ function nwscorematrix(seq1, seq2; match=1, mismatch=-1, gap=-1)
         end
     end
     return scoremat
+end
+
+#need to write a function that finds and returns the best alignment
+"""
+    nwalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
+
+    This function takes the results of a matrix scored using needleman_wunsch properties,
+    then returns the proper alignment of sequences based on the matrix as a tuple of two strings.
+
+    Ex.)
+    julia> nwalign("AGGT", "ACGAT")
+    ("AGG-T", "ACGAT")
+
+    julia> nwalign("ACAT", "AGAT")
+    ("ACAT", "AGAT")
+
+    julia> nwalign("AGGTC", "ACGT")
+    ("AGGTC", "ACGT-")
+
+"""
+function nwalign(seq1::String, seq2::String; match =1, mismatch=-1, gap=-1)
+    if !isDNA(seq1) || !isDNA(seq2) || length(seq1) == 0 || length(seq2) == 0
+        throw(ErrorException("Invalid DNA sequence provided"))
+    end
+    
+    scoremat = nwscorematrix(seq1, seq2; match=match, mismatch=mismatch, gap=gap)
+    aligned1 = ""
+    aligned2 = ""
+
+    i = size(scoremat,1)
+    j = size(scoremat,2)
+
+    while i > 1 && j > 1
+            #check scores from left, right, diag, and if any match current cell, then add that char to the alignments
+            if scoremat[i,j] == nwscore(seq1[i-1], nothing; match, mismatch, gap) + scoremat[i-1,j]
+                #@info "max is from above"
+                aligned1 = aligned1 * seq1[i-1]
+                aligned2 = aligned2 * "-"
+                #update the traversal indices
+                i = i-1
+            elseif scoremat[i,j] == nwscore(nothing, seq2[j-1]; match, mismatch, gap) + scoremat[i,j-1]
+                #@info "max is from left"
+                aligned1 = aligned1 * "-"
+                aligned2 = aligned2 * seq2[j-1]
+                #update the traversal indices
+                j = j-1
+            else
+                #@info "max is from diag"
+                aligned1 = aligned1 * seq1[i-1]
+                aligned2 = aligned2 * seq2[j-1]
+                #update the traversal indices
+                i = i-1
+                j = j-1
+            end
+
+    end
+    aligned1 = reverse(aligned1)
+    aligned2 = reverse(aligned2)
+    return (aligned1, aligned2)
+end
+
+"""
+    isDNA(sequence)
+
+checks the given sequence, and if one of its letters is not a base as stored in the bases array, then returns false.
+otherwise, returns true
+"""
+function isDNA(sequence)
+    bases = ['A', 'C', 'G', 'T']
+    sequence = uppercase(sequence)
+    for letter in sequence
+        if !(letter ∈ bases)
+            return false
+        end
+    end
+    return true
 end

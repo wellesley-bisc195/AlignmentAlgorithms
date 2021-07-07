@@ -4,7 +4,10 @@ export nwscore,
        nwsetupmatrix,
        nwscorematrix,
        swsetupmatrix,
-       swscorematrix
+       swscorematrix,
+       nwalign,
+       swalign,
+       isDNA
 #export nwalign
 
 include("needleman_wunsch.jl")
