@@ -101,5 +101,5 @@ end
     end
 end=#
 
-i= size(scoremat, 1)
-j= size(scoremat, 2)
+#i= size(scoremat, 1)
+#j= size(scoremat, 2)
